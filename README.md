@@ -9,3 +9,7 @@ Requirements:
 * python >= `3.5`
 * django >= `1.11`
 * docker `used to install and run Redis`
+
+Run migrations required by Django's session framework:
+
+```./manage.py migrate```
