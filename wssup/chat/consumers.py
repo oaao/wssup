@@ -23,8 +23,8 @@ class Consumer(WebsocketConsumer):
     def disconnect(self, close_code):
         pass
 
-    def receive(self, text):
-        j   = json.loads(text)
+    def receive(self, text_data):
+        j   = json.loads(text_data)
         msg = j['message']
 
         self.send(text_data=json.dumps({'message': msg}))
