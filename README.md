@@ -8,4 +8,4 @@ Requirements:
 
 * python >= `3.5`
 * django >= `1.11`
-* `docker` (*used to install and run Redis*)
+* docker `used to install and run Redis`
