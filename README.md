@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.domain.com', '.domain.com']
 Start a Redis server on a local `{port}` via Docker.
 
 ```bash
-$ docker run -p {port}:6379 -d redis:2.8
+$ docker run -p {port}:6379 -d redis:5.0
 ```
 
 Run the django ASGI server.
@@ -101,6 +101,7 @@ $ ./manage.py shell
 >>> from chat.tests import ChatTests
 >>> ChatTests().setUpClass()
 ```
+
 
 ----
 [back](#troubleshooting)
