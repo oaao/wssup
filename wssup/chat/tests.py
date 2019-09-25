@@ -50,6 +50,34 @@ class ChatTests(ChannelsLiveServerTestCase):
         finally:
             self._close_all_new_windows()
 
+    def test_msg_seen_only_in_own_room(self):
+
+        try:
+            self._enter_room('test2')
+
+            self._open_new_window()
+            self._enter_room('not_test2')
+
+            self._switch_to_window(0)
+            self._post_msg('hi there')
+
+            WebDriverWait(self.driver, 2).until(
+                lambda _ : 'hi there' in self._chat_log_val, 'Message not received by window1 from window1'
+            )
+
+            self._switch_to_window(1)
+            self._post_msg('hi2u2')
+
+            WebDriverWait(self.driver, 2).until(
+                lambda _ : 'hi2u2' in self._chat_log_val, 'Message not received by window2 from window2'
+            )
+
+            self.assertTrue(
+                'hi there' not in self._chat_log_val, '! Message improperly received by window2 from window1'
+            )
+        finally:
+            self._close_all_new_windows()
+
 
     # ---- HELPERS ----
     def _enter_room(self, name):
