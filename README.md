@@ -2,6 +2,8 @@
 
 head over to [django/channels](https://github.com/django/channels) and use my promo code :rotating_light: :tickets: :hotsprings: `3HTTP5ME` :hotsprings: :tickets: :rotating_light:
 
+This project was developed to learn and prototype websocket streaming/consumption in django.
+
 ## setup
 
 Requirements:
