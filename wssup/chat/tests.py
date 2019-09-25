@@ -26,6 +26,29 @@ class ChatTests(ChannelsLiveServerTestCase):
         super().tearDownClass()
 
     # ---- TESTS ----
+    def test_posted_message_seen_by_all_room_members(self):
+
+        try:
+            self._enter_room('test1')
+
+            self._open_new_window(0)
+            self._enter_room('test1')
+
+            self._switch_to_window(0)
+
+            self._post_msg('hiya')
+
+            WebDriverWait(self.driver, 2).until(
+                lambda _ : 'hiya' in self._chat_log_val, 'Message not received by window1 from window1`'
+            )
+
+            self.switch_to_window(1)
+            WebDriverWait(self.driver, 2).until(
+                lambda _ : 'hiya' in self._chat_log_val, 'Message not received by window2 from window1'
+            )
+
+        finally:
+            self._close_all_new_windows()
 
 
     # ---- HELPERS ----
