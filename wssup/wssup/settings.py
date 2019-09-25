@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'chat',
 
     'channels',
+    'channels_redis',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -130,3 +131,13 @@ STATIC_URL = '/static/'
 # together with 'channels' in INSTALLED_APPS
 # reassigns runserver command from django devt server to channels devt server
 ASGI_APPLICATION = 'wssup.routing.application'
+
+REDIS_PORT = 6380
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG':  {
+            'hosts': [('127.0.0.1', REDIS_PORT)]
+        }
+    }
+}
