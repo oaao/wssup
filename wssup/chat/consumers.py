@@ -19,6 +19,24 @@ class Consumer(WebsocketConsumer):
     """
 
     def connect(self):
+
+        # obtain the 'room_name' URLparam from the URL route that opened the ws connection to the consumer
+        # scope: information about a consumer's connection,
+        #   including *args **kwargs from URL route and/or currently authed user
+        self.room       = self.scope['url_route']['kwargs']['room_name']
+
+        # will fail on names outside alphanumeric+hyphens+periods charset
+        self.room_group = f'chat_{self.room}'
+
+        # join the groom group
+        # we currently have a synchronous consumer, but call a channel layer method (all of which are async)
+        a2s(self.channel_layer.group_add)(
+            self.room_group,
+            self.channel_name
+        )
+
+        # if accept() is not called within the connect method,
+        # then the connection is rejected and closed. can use this in future for auth check
         self.accept()
 
     def disconnect(self, close_code):
