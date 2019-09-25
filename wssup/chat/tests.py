@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from channels.testing import ChannelsLiveServerTestCase
 
 from selenium import webdriver
@@ -11,7 +13,7 @@ class ChatTests(ChannelsLiveServerTestCase):
 
         try:
             # requires "chromedriver" to be installed in $PATH
-            cls.driver = webdriver.Chrome('./chromedriver')
+            cls.driver = webdriver.Chrome(settings.CHROMEDRIVER_PATH)
         except:
             super().tearDownClass()
             raise
