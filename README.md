@@ -13,3 +13,5 @@ Requirements:
 Run migrations required by Django's session framework:
 
 ```./manage.py migrate```
+
+Configure `ALLOWED_HOSTS` in `wssup.wssup.settings` (e.g. `*`, or `localhost` + `127.0.0.1`, or a specific domain name and/or external IP) as preferred.
