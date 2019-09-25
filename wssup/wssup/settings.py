@@ -143,4 +143,5 @@ CHANNEL_LAYERS = {
 }
 
 # if empty, selenium.webdriver.Chrome(path) will use $PATH for arg path
-CHROMEDRIVER_PATH = '.'
+CHROMEDRIVER_PATH = './chromedriver'
+
