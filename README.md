@@ -27,30 +27,6 @@ Configure allowed hosts as needed:
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.domain.com', '.domain.com']
 ```
 
-### optional - testing via selenium
-
-Install [Google Chrome](https://www.google.com/chrome/) web browser.
-
-Obtain [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/getting-started) and place it in a preferred path. This is used by Selenium to control Chrome.
-> This package provides chromedriver for Chrome 77(.0.3865.75) 64-bit.
-> If your needs differ, ensure you choose the appropriate release for your installed Chrome version.
-
-Change the value of `wssup.settings.CHROMEDRIVER_PATH` to match that path. An empty setting will result in `selenium.webdriver.Chrome(path)` using `$PATH` as the `path`.
-> By default, this package points to `./wssup/chromedriver`.
-
-Ensure that `chromedriver` is executable.
-```bash
-# wssup/
-$ chmod +x chromedriver
-```
-
-Install Selenium.
-
-```bash
-$ pip3 install selenium
-```
-
-
 ## usage
 
 Start a Redis server on a local `{port}` via Docker.
@@ -67,6 +43,27 @@ $ ./manage.py runserver # 0:{port} for external access
 ```
 
 Clients access `{host}/chat/` and input a chatroom name to join. All messages from all clients should appear in that room.
+
+## optional - testing via selenium
+
+Install [Google Chrome](https://www.google.com/chrome/) web browser.
+
+Obtain [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/getting-started) and place it in a preferred path. Selenium controls Chrome through `chromedriver`.
+> This package provides `chromedriver` for Chrome 77(.0.3865.75) 64-bit.
+
+> If your needs differ, ensure you choose the appropriate release for your installed Chrome version.
+
+Change the value of `wssup.settings.CHROMEDRIVER_PATH` to match the `chromedriver` path (incl. filename).
+
+An empty setting will result in `selenium.webdriver.Chrome(path)` using `$PATH` as the `path`.
+> By default, this package points to `./wssup/chromedriver`
+
+Ensure that `chromedriver` is executable.
+```bash
+# {chromedriver dir}/
+$ chmod +x chromedriver
+```
+
 
 ## troubleshooting <a name="troubleshooting"></a>
 
