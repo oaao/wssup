@@ -1,10 +1,9 @@
 import json
 
-from asgiref.sync               import async_to_sync as a2s
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 
 
-class Consumer(WebsocketConsumer):
+class Consumer(AsyncWebsocketConsumer):
     """
     Synchronous websocket consumer.
         - accepts all connections
@@ -18,49 +17,51 @@ class Consumer(WebsocketConsumer):
     such as accessing a Django model.
     """
 
-    def connect(self):
+    async def connect(self):
 
         # obtain the 'room_name' URLparam from the URL route that opened the ws connection to the consumer
         # scope: information about a consumer's connection,
         #   including *args **kwargs from URL route and/or currently authed user
-        self.room       = self.scope['url_route']['kwargs']['room_name']
+        self.room = self.scope['url_route']['kwargs']['room_name']
 
         # will fail on names outside alphanumeric+hyphens+periods charset
         self.room_group = f'chat_{self.room}'
 
         # join the groom group
         # we currently have a synchronous consumer, but call a channel layer method (all of which are async)
-        a2s(self.channel_layer.group_add)(
+        await self.channel_layer.group_add(
             self.room_group,
             self.channel_name
         )
 
         # if accept() is not called within the connect method,
         # then the connection is rejected and closed. can use this in future for auth check
-        self.accept()
+        await self.accept()
 
-    def disconnect(self, close_code):
+    async def disconnect(self, close_code):
 
         # leave the room group
-        a2s(self.channel_layer.group_discard)(
+        await self.channel_layer.group_discard(
             self.room_group,
             self.channel_name
         )
-        pass
 
-    def receive(self, text_data):
+    async def receive(self, text_data):
+        """ Receive msg from websocket """
+
         j   = json.loads(text_data)
         msg = j['message']
 
         # send msg to room group
-        a2s(self.channel_layer.group_send)(
+        await self.channel_layer.group_send(
             self.room_group,
             {'type': 'chat_message', 'message': msg}
         )
 
-    def chat_message(self, event):
+    async def chat_message(self, event):
+        """ Receive msg from room group """
 
         msg = event['message']
 
         # send a message to websocket
-        self.send(text_data=json.dumps({'message': msg}))
+        await self.send(text_data=json.dumps({'message': msg}))
