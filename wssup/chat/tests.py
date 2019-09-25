@@ -31,7 +31,7 @@ class ChatTests(ChannelsLiveServerTestCase):
         try:
             self._enter_room('test1')
 
-            self._open_new_window(0)
+            self._open_new_window()
             self._enter_room('test1')
 
             self._switch_to_window(0)
