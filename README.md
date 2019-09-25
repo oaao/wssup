@@ -66,17 +66,18 @@ $ ./manage.py runserver # 0:{port} for external access
 
 Clients access `{host}/chat/` and input a chatroom name to join. All messages from all clients should appear in that room.
 
-## troubleshooting
+## troubleshooting <a name="troubleshooting"></a>
 
 + [test that a channel layer can communicate with Redis](#channel_talks_redis)
-
-
-**test that a channel layer can communicate with Redis**<a name="channel_talks_redis"></a>
++ [test that chromedriver is correctly accessed path-wise](#chromedriver_path)
 
 ```bash
 # wssup/
 $ ./manage.py shell
 ```
+
+**test that a channel layer can communicate with Redis**<a name="channel_talks_redis"></a>
+
 ```python
 >>> import channels.layers
 >>> cl = channels.layers.get_channel_layer()
@@ -87,3 +88,16 @@ $ ./manage.py shell
 >>> a2s(cl.receive)('test')
 {'type': 'hi'}
 ```
+
+----
+[back](#troubleshooting)
+
+**test that chromedriver is correctly accessed path-wise**<a name="chromedriver_path"></a>
+
+```python
+>>> from chat.tests import ChatTests
+>>> ChatTests().setUpClass()
+```
+
+----
+[back](#troubleshooting)
