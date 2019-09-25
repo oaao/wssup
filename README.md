@@ -42,26 +42,30 @@ Run the django ASGI server.
 $ ./manage.py runserver # 0:{port} for external access
 ```
 
-Clients access `{host}/chat/` and input a chatroom name to join. All messages from all clients should appear in that room.
+Clients access `{host}/chat/` and input a chatroom name to join. All messages from all clients in that room appear to each other.
 
 ## optional - testing via selenium
 
 Install [Google Chrome](https://www.google.com/chrome/) web browser.
 
 Obtain [chromedriver](https://sites.google.com/a/chromium.org/chromedriver/getting-started) and place it in a preferred path. Selenium controls Chrome through `chromedriver`.
-> This package provides `chromedriver` for Chrome 77(.0.3865.75) 64-bit.
+> This package provides `chromedriver` for for Chrome 77; Choose appropriately for your Chrome version.
 
-> If your needs differ, ensure you choose the appropriate release for your installed Chrome version.
+Set `wssup.settings.CHROMEDRIVER_PATH` to the chromedriver path.
 
-Change the value of `wssup.settings.CHROMEDRIVER_PATH` to match the `chromedriver` path (incl. filename).
-
-An empty setting will result in `selenium.webdriver.Chrome(path)` using `$PATH` as the `path`.
-> By default, this package points to `./wssup/chromedriver`
+> By default, this package points to `./wssup/chromedriver`. An empty value will use `$PATH`.
 
 Ensure that `chromedriver` is executable.
 ```bash
 # {chromedriver dir}/
 $ chmod +x chromedriver
+```
+
+Run the tests.
+
+```bash
+# wssup/
+$ ./manage.py test chat.tests
 ```
 
 
