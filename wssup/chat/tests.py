@@ -42,7 +42,7 @@ class ChatTests(ChannelsLiveServerTestCase):
                 lambda _ : 'hiya' in self._chat_log_val, 'Message not received by window1 from window1`'
             )
 
-            self.switch_to_window(1)
+            self._switch_to_window(1)
             WebDriverWait(self.driver, 2).until(
                 lambda _ : 'hiya' in self._chat_log_val, 'Message not received by window2 from window1'
             )
