@@ -40,10 +40,27 @@ class Consumer(WebsocketConsumer):
         self.accept()
 
     def disconnect(self, close_code):
+
+        # leave the room group
+        a2s(self.channel_layer.group_discard)(
+            self.room_group,
+            self.channel_name
+        )
         pass
 
     def receive(self, text_data):
         j   = json.loads(text_data)
         msg = j['message']
 
+        # send msg to room group
+        a2s(self.channel_layer.group_send)(
+            self.room_group,
+            {'type': 'chat_message', 'message': msg}
+        )
+
+    def chat_message(self, event):
+
+        msg = event['message']
+
+        # send a message to websocket
         self.send(text_data=json.dumps({'message': msg}))
